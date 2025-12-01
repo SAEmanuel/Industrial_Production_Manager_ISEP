@@ -1,147 +1,77 @@
-# Project Template
+<div align="center">
 
-Template Repository for Integrative Project LEI-ISEP 3.Semester
+  # 🏭 Industrial Production Manager
+  ### Smart Factory Solution
 
-plantFloorMachineManager - application to manage Plant Floor - PL/SQL scripts for Oracle
+  <p align="center">
+    An integrated system for <b>Production Planning</b>, <b>Shop Floor Simulation</b>, and <b>Machine Control</b> designed for short-run and project-based manufacturing.
+  </p>
 
-machineSupervisor - application to supervise and operate machines on Plant Floor - C and Assembly
+  <p align="center">
+    <a href="https://skillicons.dev">
+      <img src="https://skillicons.dev/icons?i=java,c,mysql,maven,idea,git,linux&theme=dark" />
+    </a>
+  </p>
 
-prodPlanSimulator - Prodution Planner Simulator - JAVA application
+  ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+  ![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
+  ![Assembly](https://img.shields.io/badge/Assembly-Run_Low_Level-525252?style=for-the-badge&logo=cpu&logoColor=white)
+  ![PL/SQL](https://img.shields.io/badge/PL%2FSQL-Oracle_DB-F80000?style=for-the-badge&logo=oracle&logoColor=white)
 
-projectManager - Manager for Projects using PERT/CPM methodology - JAVA application
+</div>
 
+---
 
+## 📘 Project Overview
 
+Developed within the scope of the **Integrative Project (3rd Semester - LEI/ISEP)**, this solution addresses the needs of **KeepIt Simple Solutions (KS)**, focusing on the management of flexible industrial units.
 
+The system is composed of multiple interacting modules that handle everything from high-level project management (using **PERT/CPM**) to low-level hardware control of factory machines (using **C/Assembly** on Raspberry Pi).
 
-This is the project template for LEI's second semester 2024/2025 Integrative Project.
+---
 
-It contains didactic artifacts relevant to the Integrative Project to be developed during the second semester of the academic year of 2024-2025 in the [Degree in Informatics Engineering (LEI)](https://www.isep.ipp.pt/Course/Course/26) from [Instituto Superior de Engenharia do Porto (ISEP)](https://www.isep.ipp.pt).
+## ⚙️ System Architecture & Modules
 
-In particular, it has:
+The solution is divided into four main applications:
 
-* [The team members and task assignment during Sprints](docs/Readme.md)
-* A [template](docs/template) to capture and systematize evidence of appropriate application of the Software Development Process, namely regarding the activities of Requirements Engineering, Analysis and Design
-* Source code available to students as a starting point
-* General description of how the provided application works (and it is structured).
+### 1. 🏗️ Plant Floor Advanced Tools (Java)
+* **Production Simulation:** Simulates the processing of items through workstations based on priority queues and machine availability.
+* **Project Manager:** Implements **PERT/CPM (Critical Path Method)** to analyze project schedules, detect bottlenecks, and calculate slack times using **Graph Theory**.
+* **Data Structures:** Utilizes **BST/AVL Trees** for material management and **Heaps** for priority-based quality checks.
 
+### 2. 🤖 Machine Supervisor (C & Assembly)
+* **Low-Level Control:** Developed to run on **Raspberry Pi**.
+* **Sensor Integration:** Reads temperature and humidity sensors to monitor machine health.
+* **Actuators:** Controls LEDs to signal machine status (Operation/Idle/Off) and binary operation codes.
+* **Safety Mechanisms:** Implements "Moving Median" filters to detect sensor anomalies and trigger alerts.
 
-## How to generate the svg files
+### 3. 🗄️ Database Management (PL/SQL)
+* **Persistence:** Oracle Database storing Products (BOM), Operations (BOO), Orders, and Stock.
+* **Logic:** Uses complex **Triggers** and **Stored Procedures** to validate business rules (e.g., preventing circular dependencies in BOMs, checking stock availability).
 
-On project root folder, run the following script:
+### 4. 🏭 Plant Floor Manager (Java/UI)
+* **Coordination:** Bridges the gap between the high-level planning tools and the low-level machine data.
+* **Visualization:** Imports and visualizes the Bill of Materials (BOM) and Bill of Operations (BOO).
 
-Remarks: it works for Linux and MacOS. For Windows, you have to adapt the script.
+---
 
-```shell
-$ bin/generate-plantuml-diagrams.sh
-```
+## 🚀 Build & Run
 
+This project uses **Maven** for the Java components. Ensure you have JDK 11+ and an Oracle Database connection configured.
 
-## How the project is organized
+### 📦 Core Commands
 
-This project uses Java and Maven.
+| Action | Command |
+| :--- | :--- |
+| **Run Unit Tests** | `mvn clean test` |
+| **Build JAR** | `mvn package` |
+| **Run App** | `java -jar target/project-template-1.0-SNAPSHOT-jar-with-dependencies.jar` |
 
-We have to declare the maven-surefire-plugin in the pom.xml file and configure the dependencies of this plugin. 
+### 🔍 Quality & Coverage
 
-We have to declare the following dependencies:
+<details>
+<summary>Click to see advanced analysis commands</summary>
 
-The junit-platform-surefire-provider dependency allows us to run tests that use either the “old” JUnit (3 or 4) or JUnit 5.
-
-If we want to run tests that use JUnit 5, we have to declare the junit-jupiter-engine dependency.
-
-* Junit Jupiter Dependency graph
-    - https://junit.org/junit5/docs/current/user-guide/
-* JUnit Annotation
-    - https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations
-
-
-## Maven goals
-
-### Run the unit tests
-```
-mvn clean test
-```
-
-### Generate javadoc for the source code
-```
+#### Documentation
+```bash
 mvn javadoc:javadoc
-```
-
-### Generate javadoc for the test code
-```
-mvn javadoc:test-javadoc
-```
-
-### Generate Jacoco source code coverage report
-```
-mvn test jacoco:report
-```
-
-### Check if thresholds limits are achieved
-```
-mvn test jacoco:check
-```
-
-### Generates a PIT Mutation coverage report to target/pit-reports/YYYYMMDDHHMI
-```
-mvn org.pitest:pitest-maven:mutationCoverage
-```
-
-### Generates a quicker PIT Mutation coverage report to target/pit-reports/YYYYMMDDHHMI
-```
-mvn org.pitest:pitest-maven:mutationCoverage -DwithHistory
-```
-
-### Complete example
-
-``` 
-mvn test javadoc:javadoc jacoco:report org.pitest:pitest-maven:mutationCoverage -DhistoryInputFile=target/fasterPitMutationTesting-history.txt -DhistoryOutputFile=target/fasterPitMutationTesting-history.txt -Dsonar.pitest.mode=reuseReport -Dthreads=4 -DtimestampedReports=false
-```
-## Jacoco dependencies
-* https://github.com/pitest/pitest-junit5-plugin
-  - https://mvnrepository.com/artifact/org.pitest/pitest-junit5-plugin
-    - required to work with JUnit5
-
-## How to generate a Jar package for the project
-
-Place the following plugin on the appropriate place of the pom.xml file.
-
-```xml
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-assembly-plugin</artifactId>
-    <version>3.6.0</version>
-    <executions>
-        <execution>
-            <phase>package</phase>
-            <goals>
-                <goal>single</goal>
-            </goals>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <mainClass>pt.ipp.isep.dei.esoft.project.ui.Main</mainClass>
-                    </manifest>
-                </archive>
-                <descriptorRefs>
-                    <descriptorRef>jar-with-dependencies</descriptorRef>
-                </descriptorRefs>
-            </configuration>
-        </execution>
-    </executions>
-</plugin>
-```
-
-Run the following command on the project root folder. You can use IntelliJ to run the command or the command line of your computer if you hav Maven installed.
-
-```
-mvn package
-```
-
-## How to run the project from the generated Jar Package
-
-Run the following command on the project root folder. You can use IntelliJ to run the command or the command line of your computer if you hav Maven installed.
-
-```
-java -jar target/project-template-1.0-SNAPSHOT-jar-with-dependencies.jar
-```
