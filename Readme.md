@@ -75,3 +75,7 @@ This project uses **Maven** for the Java components. Ensure you have JDK 11+ and
 #### Documentation
 ```bash
 mvn javadoc:javadoc
+```
+</details>
+
+<div align="center"> <sub>Developed for the Degree in Informatics Engineering (LEI) @ ISEP - 2024/2025</sub> </div>
